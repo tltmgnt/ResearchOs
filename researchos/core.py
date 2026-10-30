@@ -47,37 +47,41 @@ class EpistemicController:
                 raise ValueError(
                     f'unknown dependency: {dependency_id}'
                 )
-graph_node = GraphNode(
-    identifier=claim.identifier,
-    node_type="claim",
-    metadata={"status": claim.status.value}
-)
-from copy import deepcopy
+        graph_node = GraphNode(
+            identifier=claim.identifier,
+            node_type="claim",
+            metadata={"status": claim.status.value}
+        )
+        from copy import deepcopy
 
-candidate_graph = deepcopy(self.graph)
+        candidate_graph = deepcopy(self.graph)
 
-candidate_graph.add_node(graph_node)
+        candidate_graph.add_node(graph_node)
 
-for dependency_id in claim.dependencies:
-    candidate_graph.add_edge(
-        claim.identifier,
-        dependency_id
-    )
+        for dependency_id in claim.dependencies:
+            candidate_graph.add_edge(
+                claim.identifier,
+                dependency_id
+            )
 
-self.graph = candidate_graph
+        self.graph = candidate_graph
         
-self.claims[claim.identifier] = claim
-self.audit.append({
-    'claim': claim.identifier,
-    'event': 'registered'
-})
+        self.claims[claim.identifier] = claim
+        self.audit.append({
+            'claim': claim.identifier,
+            'event': 'registered'
+        })
 
     def add_evidence(self, claim_id: str, evidence: Evidence):
         claim = self.claims[claim_id]
         if any(e.identifier == evidence.identifier for e in claim.evidence):
             raise ValueError('duplicate evidence identifier')
         claim.evidence.append(evidence)
-        self.audit.append({'claim': claim_id, 'event': 'evidence_added', 'evidence': evidence.identifier})
+        self.audit.append({
+            'claim': claim_id, 
+            'event': 'evidence_added', 
+            'evidence': evidence.identifier
+        })
         if not evidence.supports:
             self._contest_with_dependents(claim_id)
 
