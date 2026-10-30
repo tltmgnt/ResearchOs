@@ -20,6 +20,7 @@ class Evidence:
     source: str
     supports: bool
     independently_verified: bool = False
+    origin_id: str = ""
 
 @dataclass
 class Claim:

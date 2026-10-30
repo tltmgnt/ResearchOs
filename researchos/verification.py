@@ -15,3 +15,25 @@ def verify_evidence(claim: Claim) -> bool:
     )
 
     return verified_support and not verified_contradiction
+def verify_independent_origins(claim: Claim) -> bool:
+    """Require two distinct verified origins and no verified contradictions."""
+
+    verified_contradiction = any(
+        not evidence.supports and evidence.independently_verified
+        for evidence in claim.evidence
+    )
+
+    if verified_contradiction:
+        return False
+
+    verified_origins = {
+        evidence.origin_id
+        for evidence in claim.evidence
+        if (
+            evidence.supports
+            and evidence.independently_verified
+            and evidence.origin_id.strip()
+        )
+    }
+
+    return len(verified_origins) >= 2
