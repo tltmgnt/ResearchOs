@@ -38,8 +38,18 @@ class EpistemicController:
     def register(self, claim: Claim):
         if claim.identifier in self.claims:
             raise ValueError('duplicate claim identifier')
+
+        for dependency_id in claim.dependencies:
+            if dependency_id not in self.claims:
+                raise ValueError(
+                    f'unknown dependency: {dependency_id}'
+                )
+
         self.claims[claim.identifier] = claim
-        self.audit.append({'claim': claim.identifier, 'event': 'registered'})
+        self.audit.append({
+            'claim': claim.identifier,
+            'event': 'registered'
+        })
 
     def add_evidence(self, claim_id: str, evidence: Evidence):
         claim = self.claims[claim_id]
