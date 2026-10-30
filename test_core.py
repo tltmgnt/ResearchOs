@@ -71,5 +71,22 @@ class ControllerTests(unittest.TestCase):
             self.os.claims['c1'].status,
             Status.VALIDATED
         )
+            def test_missing_dependency_rejected(self):
+        invalid_claim = Claim(
+            'c_missing',
+            'Claim with nonexistent dependency',
+            dependencies=['does_not_exist']
+        )
+
+        with self.assertRaisesRegex(
+            ValueError,
+            'unknown dependency'
+        ):
+            self.os.register(invalid_claim)
+
+        self.assertNotIn(
+            'c_missing',
+            self.os.claims
+        )
 if __name__ == '__main__':
     unittest.main()
