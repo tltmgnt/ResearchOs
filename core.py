@@ -101,11 +101,7 @@ class EpistemicController:
                 f'invalid transition: {claim.status.value} -> {target.value}'
             )
 
-        if target in {
-            Status.SUPPORTED,
-            Status.VALIDATED,
-            Status.ASSURED
-        }:
+        if target in {Status.VALIDATED, Status.ASSURED}:
             if self._has_dependency_cycle(claim_id):
                 raise ValueError(
                     'circular dependency detected'
@@ -113,8 +109,11 @@ class EpistemicController:
         if target in {Status.SUPPORTED, Status.VALIDATED, Status.ASSURED}:
             if not claim.evidence or any(not e.supports for e in claim.evidence):
                 raise ValueError('supporting evidence required; unresolved challenge blocks promotion')
-            if any(self.claims[d].status not in {Status.VALIDATED, Status.ASSURED} for d in claim.dependencies):
-                raise ValueError('unvalidated dependency blocks promotion')
+        if target in {Status.VALIDATED, Status.ASSURED} and any(
+            self.claims[d].status not in {Status.VALIDATED, Status.ASSURED}
+            for d in claim.dependencies
+        ):
+            raise ValueError('unvalidated dependency blocks promotion')
         if target in {Status.VALIDATED, Status.ASSURED}:
             if not any(e.independently_verified for e in claim.evidence):
                 raise ValueError('independent verification required')
