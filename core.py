@@ -63,6 +63,29 @@ class EpistemicController:
             self.audit.append({'claim': current, 'event': 'contested', 'previous': old.value})
             queue.extend(c.identifier for c in self.claims.values() if current in c.dependencies)
 
+    def _has_dependency_cycle(self, claim_id: str) -> bool:
+        visiting = set()
+        visited = set()
+
+        def visit(current_id: str) -> bool:
+            if current_id in visiting:
+                return True
+
+            if current_id in visited:
+                return False
+
+            visiting.add(current_id)
+
+            for dependency_id in self.claims[current_id].dependencies:
+                if visit(dependency_id):
+                    return True
+
+            visiting.remove(current_id)
+            visited.add(current_id)
+            return False
+
+        return visit(claim_id)
+
     def transition(self, claim_id: str, target: Status):
         claim = self.claims[claim_id]
         allowed = {
@@ -74,12 +97,23 @@ class EpistemicController:
             Status.ASSURED: set(),
         }
         if target not in allowed[claim.status]:
-            raise ValueError(f'invalid transition: {claim.status.value} -> {target.value}')
+            raise ValueError(
+                f'invalid transition: {claim.status.value} -> {target.value}'
+            )
+
+        if target in {Status.VALIDATED, Status.ASSURED}:
+            if self._has_dependency_cycle(claim_id):
+                raise ValueError(
+                    'circular dependency detected'
+                )
         if target in {Status.SUPPORTED, Status.VALIDATED, Status.ASSURED}:
             if not claim.evidence or any(not e.supports for e in claim.evidence):
                 raise ValueError('supporting evidence required; unresolved challenge blocks promotion')
-            if any(self.claims[d].status not in {Status.VALIDATED, Status.ASSURED} for d in claim.dependencies):
-                raise ValueError('unvalidated dependency blocks promotion')
+        if target in {Status.VALIDATED, Status.ASSURED} and any(
+            self.claims[d].status not in {Status.VALIDATED, Status.ASSURED}
+            for d in claim.dependencies
+        ):
+            raise ValueError('unvalidated dependency blocks promotion')
         if target in {Status.VALIDATED, Status.ASSURED}:
             if not any(e.independently_verified for e in claim.evidence):
                 raise ValueError('independent verification required')

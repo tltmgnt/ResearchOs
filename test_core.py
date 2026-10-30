@@ -47,5 +47,71 @@ class ControllerTests(unittest.TestCase):
             self.os.claims['c1'].status,
             Status.SUPPORTED
         )
+    def test_single_origin_cannot_be_assured(self):
+        self.os.transition('c1', Status.UNVERIFIED)
+
+        self.os.add_evidence(
+            'c1',
+            Evidence(
+                'e1',
+                'independent_checker',
+                True,
+                True,
+                'origin_a'
+            )
+        )
+
+        self.os.transition('c1', Status.SUPPORTED)
+        self.os.transition('c1', Status.VALIDATED)
+
+        with self.assertRaises(ValueError):
+            self.os.transition('c1', Status.ASSURED)
+
+        self.assertEqual(
+            self.os.claims['c1'].status,
+            Status.VALIDATED
+        )
+    def test_missing_dependency_rejected(self):
+        invalid_claim = Claim(
+            'c_missing',
+            'Claim with nonexistent dependency',
+            dependencies=['does_not_exist']
+        )
+
+        with self.assertRaisesRegex(
+            ValueError,
+            'unknown dependency'
+        ):
+            self.os.register(invalid_claim)
+
+        self.assertNotIn(
+            'c_missing',
+            self.os.claims
+        )
+    def test_circular_dependency_blocks_assurance(self):
+        self.os.register(
+            Claim(
+                'c2',
+                'Second claim',
+                dependencies=['c1']
+            )
+        )
+
+        self.os.claims['c1'].dependencies.append('c2')
+
+        self.os.transition('c1', Status.UNVERIFIED)
+
+        self.os.add_evidence(
+            'c1',
+            Evidence('e1', 'reviewer_a', True, True, 'origin_a')
+        )
+
+        self.os.transition('c1', Status.SUPPORTED)
+
+        with self.assertRaisesRegex(
+            ValueError,
+            'circular dependency'
+        ):
+            self.os.transition('c1', Status.VALIDATED)
 if __name__ == '__main__':
     unittest.main()
