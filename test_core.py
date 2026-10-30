@@ -30,6 +30,22 @@ class ControllerTests(unittest.TestCase):
         self.os.transition('c1', Status.SUPPORTED)
         self.os.transition('c1', Status.VALIDATED)
         self.assertEqual(self.os.claims['c1'].status, Status.VALIDATED)
+    def test_unverified_evidence_blocks_validation(self):
+        self.os.transition('c1', Status.UNVERIFIED)
 
+        self.os.add_evidence(
+            'c1',
+            Evidence('e_unverified', 'reviewer', True, False)
+        )
+
+        self.os.transition('c1', Status.SUPPORTED)
+
+        with self.assertRaises(ValueError):
+            self.os.transition('c1', Status.VALIDATED)
+
+        self.assertEqual(
+            self.os.claims['c1'].status,
+            Status.SUPPORTED
+        )
 if __name__ == '__main__':
     unittest.main()

@@ -81,8 +81,9 @@ class EpistemicController:
             if any(self.claims[d].status not in {Status.VALIDATED, Status.ASSURED} for d in claim.dependencies):
                 raise ValueError('unvalidated dependency blocks promotion')
         if target in {Status.VALIDATED, Status.ASSURED}:
-            if not any(e.independently_verified for e in claim.evidence):
-                raise ValueError('independent verification required')
+                from .verification import verify_evidence
+                if not verify_evidence(claim):
+                    raise ValueError('independent verification required')
         previous = claim.status
         claim.status = target
         self.audit.append({'claim': claim_id, 'event': 'transition', 'from': previous.value, 'to': target.value})
