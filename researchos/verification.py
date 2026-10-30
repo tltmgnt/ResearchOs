@@ -27,7 +27,7 @@ def verify_independent_origins(claim: Claim) -> bool:
         return False
 
     verified_origins = {
-        evidence.origin_id
+        evidence.origin_id.strip()
         for evidence in claim.evidence
         if (
             evidence.supports
@@ -37,3 +37,4 @@ def verify_independent_origins(claim: Claim) -> bool:
     }
 
     return len(verified_origins) >= 2
+    
