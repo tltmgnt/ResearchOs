@@ -5,7 +5,7 @@ Demonstration software, not a mathematical truth oracle.
 from dataclasses import dataclass, field
 from enum import Enum
 from typing import Dict, List
-
+from .graph import GraphNode
 class Status(str, Enum):
     GENERATED = 'GENERATED'
     UNVERIFIED = 'UNVERIFIED'
@@ -32,8 +32,11 @@ class Claim:
 
 class EpistemicController:
     def __init__(self):
+        from .graph import KnowledgeGraph
+
         self.claims: Dict[str, Claim] = {}
         self.audit: List[dict] = []
+        self.graph = KnowledgeGraph()
 
     def register(self, claim: Claim):
         if claim.identifier in self.claims:
@@ -44,12 +47,30 @@ class EpistemicController:
                 raise ValueError(
                     f'unknown dependency: {dependency_id}'
                 )
+graph_node = GraphNode(
+    identifier=claim.identifier,
+    node_type="claim",
+    metadata={"status": claim.status.value}
+)
+from copy import deepcopy
 
-        self.claims[claim.identifier] = claim
-        self.audit.append({
-            'claim': claim.identifier,
-            'event': 'registered'
-        })
+candidate_graph = deepcopy(self.graph)
+
+candidate_graph.add_node(graph_node)
+
+for dependency_id in claim.dependencies:
+    candidate_graph.add_edge(
+        claim.identifier,
+        dependency_id
+    )
+
+self.graph = candidate_graph
+        
+self.claims[claim.identifier] = claim
+self.audit.append({
+    'claim': claim.identifier,
+    'event': 'registered'
+})
 
     def add_evidence(self, claim_id: str, evidence: Evidence):
         claim = self.claims[claim_id]
