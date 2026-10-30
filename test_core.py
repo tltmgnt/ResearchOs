@@ -47,5 +47,29 @@ class ControllerTests(unittest.TestCase):
             self.os.claims['c1'].status,
             Status.SUPPORTED
         )
+    def test_single_origin_cannot_be_assured(self):
+        self.os.transition('c1', Status.UNVERIFIED)
+
+        self.os.add_evidence(
+            'c1',
+            Evidence(
+                'e1',
+                'independent_checker',
+                True,
+                True,
+                'origin_a'
+            )
+        )
+
+        self.os.transition('c1', Status.SUPPORTED)
+        self.os.transition('c1', Status.VALIDATED)
+
+        with self.assertRaises(ValueError):
+            self.os.transition('c1', Status.ASSURED)
+
+        self.assertEqual(
+            self.os.claims['c1'].status,
+            Status.VALIDATED
+        )
 if __name__ == '__main__':
     unittest.main()
