@@ -84,7 +84,9 @@ class EpistemicController:
             visited.add(current_id)
             return False
 
-        return visit(claim_id)def transition(self, claim_id: str, target: Status):
+        return visit(claim_id)
+
+    def transition(self, claim_id: str, target: Status):
         claim = self.claims[claim_id]
         allowed = {
             Status.GENERATED: {Status.UNVERIFIED},
@@ -95,8 +97,11 @@ class EpistemicController:
             Status.ASSURED: set(),
         }
         if target not in allowed[claim.status]:
-            raise ValueError(f'invalid transition: {claim.status.value} -> {target.value}')
-                    if target in {
+            raise ValueError(
+                f'invalid transition: {claim.status.value} -> {target.value}'
+            )
+
+        if target in {
             Status.SUPPORTED,
             Status.VALIDATED,
             Status.ASSURED
