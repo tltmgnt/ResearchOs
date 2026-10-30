@@ -105,3 +105,30 @@ def test_single_verified_origin_rejected():
     )
 
     assert verify_independent_origins(claim) is False
+def test_whitespace_does_not_create_independent_origin():
+    from researchos.core import Claim, Evidence
+    from researchos.verification import verify_independent_origins
+
+    claim = Claim(
+        identifier="M5-001",
+        statement="Test evidence provenance"
+    )
+
+    claim.evidence = [
+        Evidence(
+            identifier="E1",
+            source="Source A",
+            supports=True,
+            independently_verified=True,
+            origin_id="source-A"
+        ),
+        Evidence(
+            identifier="E2",
+            source="Source A duplicate",
+            supports=True,
+            independently_verified=True,
+            origin_id=" source-A "
+        )
+    ]
+
+    assert verify_independent_origins(claim) is False
