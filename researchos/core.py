@@ -123,7 +123,7 @@ class EpistemicController:
                     'supporting evidence required; unresolved challenge blocks promotion'
                 )
 
-            if any(
+        if target in {Status.VALIDATED, Status.ASSURED} and any(
                 self.claims[d].status not in {Status.VALIDATED, Status.ASSURED}
                 for d in claim.dependencies
             ):
