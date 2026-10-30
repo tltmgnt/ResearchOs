@@ -108,7 +108,7 @@ class EpistemicController:
             Status.ASSURED: set(),
         }
 
-                if target not in allowed[claim.status]:
+        if target not in allowed[claim.status]:
             raise ValueError(
                 f'invalid transition: {claim.status.value} -> {target.value}'
             )
