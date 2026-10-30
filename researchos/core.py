@@ -113,11 +113,7 @@ class EpistemicController:
                 f'invalid transition: {claim.status.value} -> {target.value}'
             )
 
-        if target in {
-            Status.SUPPORTED,
-            Status.VALIDATED,
-            Status.ASSURED
-        }:
+        if target in {Status.VALIDATED, Status.ASSURED}:
             if self._has_dependency_cycle(claim_id):
                 raise ValueError('circular dependency detected')
 
