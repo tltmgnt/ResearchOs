@@ -94,9 +94,10 @@ class EpistemicController:
             visited.add(current_id)
             return False
 
-                return visit(claim_id)
+        return visit(claim_id)
 
-    def transition(self, claim_id: str, target: Status):
+
+ def transition(self, claim_id: str, target: Status):
         claim = self.claims[claim_id]
         allowed = {
             Status.GENERATED: {Status.UNVERIFIED},
