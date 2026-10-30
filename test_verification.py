@@ -1,6 +1,8 @@
 from researchos.core import Claim, Evidence
-from researchos.verification import verify_evidence
-
+from researchos.verification import (
+    verify_evidence,
+    verify_independent_origins,
+)
 
 def test_unsupported_claim_rejected():
     claim = Claim("test1", "AI-generated claim")
@@ -39,3 +41,67 @@ def test_verified_contradiction_blocks_verification():
     )
 
     assert verify_evidence(claim) is False
+
+def test_distinct_verified_origins_accepted():
+    claim = Claim("test6", "Distinct origins")
+
+    claim.evidence.append(
+        Evidence("e1", "source_a", True, True, "origin_a")
+    )
+    claim.evidence.append(
+        Evidence("e2", "source_b", True, True, "origin_b")
+    )
+
+    assert verify_independent_origins(claim) is True
+
+
+def test_duplicate_origins_rejected():
+    claim = Claim("test7", "Duplicate origins")
+
+    claim.evidence.append(
+        Evidence("e1", "source_a", True, True, "origin_a")
+    )
+    claim.evidence.append(
+        Evidence("e2", "source_b", True, True, "origin_a")
+    )
+
+    assert verify_independent_origins(claim) is False
+
+
+def test_missing_origins_rejected():
+    claim = Claim("test8", "Missing origins")
+
+    claim.evidence.append(
+        Evidence("e1", "source_a", True, True)
+    )
+    claim.evidence.append(
+        Evidence("e2", "source_b", True, True)
+    )
+
+    assert verify_independent_origins(claim) is False
+
+
+def test_verified_contradiction_rejected():
+    claim = Claim("test9", "Contradictory evidence")
+
+    claim.evidence.append(
+        Evidence("e1", "source_a", True, True, "origin_a")
+    )
+    claim.evidence.append(
+        Evidence("e2", "source_b", True, True, "origin_b")
+    )
+    claim.evidence.append(
+        Evidence("e3", "source_c", False, True, "origin_c")
+    )
+
+    assert verify_independent_origins(claim) is False
+
+
+def test_single_verified_origin_rejected():
+    claim = Claim("test10", "Single origin")
+
+    claim.evidence.append(
+        Evidence("e1", "source_a", True, True, "origin_a")
+    )
+
+    assert verify_independent_origins(claim) is False
