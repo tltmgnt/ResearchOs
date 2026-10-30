@@ -71,7 +71,7 @@ class ControllerTests(unittest.TestCase):
             self.os.claims['c1'].status,
             Status.VALIDATED
         )
-            def test_missing_dependency_rejected(self):
+    def test_missing_dependency_rejected(self):
         invalid_claim = Claim(
             'c_missing',
             'Claim with nonexistent dependency',
