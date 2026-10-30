@@ -88,5 +88,30 @@ class ControllerTests(unittest.TestCase):
             'c_missing',
             self.os.claims
         )
+    def test_circular_dependency_blocks_assurance(self):
+        self.os.register(
+            Claim(
+                'c2',
+                'Second claim',
+                dependencies=['c1']
+            )
+        )
+
+        self.os.claims['c1'].dependencies.append('c2')
+
+        self.os.transition('c1', Status.UNVERIFIED)
+
+        self.os.add_evidence(
+            'c1',
+            Evidence('e1', 'reviewer_a', True, True, 'origin_a')
+        )
+
+        self.os.transition('c1', Status.SUPPORTED)
+
+        with self.assertRaisesRegex(
+            ValueError,
+            'circular dependency'
+        ):
+            self.os.transition('c1', Status.VALIDATED)
 if __name__ == '__main__':
     unittest.main()
