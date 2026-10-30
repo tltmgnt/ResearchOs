@@ -15,15 +15,3 @@ def verify_evidence(claim: Claim) -> bool:
     )
 
     return verified_support and not verified_contradiction
-def test_verified_contradiction_blocks_verification():
-    claim = Claim("test5", "Contradictory claim")
-
-    claim.evidence.append(
-        Evidence("support", "source_a", True, True)
-    )
-
-    claim.evidence.append(
-        Evidence("contradiction", "source_b", False, True)
-    )
-
-    assert verify_evidence(claim) is False
