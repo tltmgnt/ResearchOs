@@ -308,7 +308,36 @@ Any material differences must be recorded.
 
 D. Current Evidence Inventory
 
-AI-001-SOURCE-01
+**AI-001-IMPLEMENTATION-01**
+
+- Source: Alexander Rush et al. (2018),
+  The Annotated Transformer
+- Source URL:
+  https://nlp.seas.harvard.edu/2018/04/03/attention.html
+- Evidence type: Separate Transformer implementation
+- Origin ID: harvardnlp-annotated-transformer-2018
+- Implementation: PyTorch
+- Demonstration dataset: IWSLT German-to-English
+- Original result discussed: 28.4 BLEU on WMT 2014
+- Independently reproduced 28.4 BLEU: NOT ESTABLISHED
+- Comparability: Different demonstration dataset
+- Classification: IMPLEMENTATION EVIDENCE ONLY
+
+**Assessment:**
+This source demonstrates a separate implementation
+of the Transformer architecture.
+
+Its practical example uses IWSLT German-to-English,
+not the original WMT 2014 English-to-German benchmark.
+
+The source must not be counted as independent
+confirmation of the exact 28.4 BLEU result.
+
+**AI-001-REPLICATION-01**
+
+- Source: Not yet established
+- Evidence type: Comparable independent replication
+- Status: PENDING
 
 * Source: Vaswani et al. (2017)
 * Evidence type: Original publication
