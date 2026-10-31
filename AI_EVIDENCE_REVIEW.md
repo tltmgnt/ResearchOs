@@ -133,18 +133,54 @@ reported. It does not independently reproduce the result.
 The publication confirms what the original authors reported.
 It does not independently establish reproducibility or
 validate the reported performance.
-2.5 Verification Checklist
+2.5 Verification 
+### 2.5 Verification Checklist
 
-* [ ]	Original publication accessed.
-* [ ]	Exact result located in the publication.
-* [ ]	Model variant confirmed.
-* [ ]	Benchmark and test split confirmed.
-* [ ]	BLEU calculation method examined.
-* [ ]	Experimental conditions recorded.
-* [ ]	Independent replication evidence searched.
-* [ ]	Supporting evidence documented.
-* [ ]	Contradictory evidence documented.
-* [ ]	Evidence limitations summarized.
+#### A. Original Publication
+
+- [x] Original publication identified.
+- [x] Reported 28.4 BLEU result located.
+- [x] Transformer (big) model identified.
+- [x] WMT 2014 English-to-German benchmark identified.
+- [x] Primary evidence location documented.
+
+#### B. Experimental Conditions
+
+- [x] Training dataset documented.
+- [x] Model training duration documented.
+- [x] Training hardware documented.
+- [x] Beam size documented.
+- [x] Length penalty documented.
+- [x] Checkpoint averaging documented.
+- [ ] Exact BLEU scoring implementation verified.
+- [ ] Software versions and random seeds verified.
+
+#### C. Independent Evidence
+
+- [ ] Independent replication identified.
+- [ ] Replication methodology examined.
+- [ ] Replication results compared.
+- [ ] Supporting evidence documented.
+- [ ] Contradictory evidence documented.
+
+#### D. Independent Review
+
+- [ ] Reviewer 1 assessment completed.
+- [ ] Reviewer 2 assessment completed.
+- [ ] Reviewer independence documented.
+- [ ] Reviewer disagreements adjudicated.
+- [ ] Final reference label established.
+
+#### E. ResearchOS Evaluation
+
+- [ ] Reference dataset frozen.
+- [ ] ResearchOS prediction generated separately.
+- [ ] Prediction recorded with commit SHA.
+- [ ] Evaluation metrics calculated.
+
+**Verification status:** PARTIAL
+
+**Independent validation status:** NOT COMPLETED
 
 2.6 Known Evaluation Risks
 
