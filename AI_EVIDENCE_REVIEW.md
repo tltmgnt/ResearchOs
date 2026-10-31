@@ -148,15 +148,71 @@ validate the reported performance.
 
 2.6 Known Evaluation Risks
 
-Metric sensitivity: BLEU scores may differ across tokenization and scoring implementations.
+### 2.6 Evidence Limitations and Evaluation Risks
 
-Model configuration: Different Transformer configurations may produce different scores.
+**1. Original-source dependence**
 
-Benchmark comparability: Translation results must use comparable datasets and evaluation procedures.
+The original publication is primary evidence of what its
+authors reported, not independent confirmation of the result.
 
-Source dependence: Multiple citations of the original paper do not establish independent reproduction.
+**2. BLEU scoring sensitivity**
 
-Historical context: Later evaluations may use different software, data preprocessing, or experimental settings.
+BLEU scores depend on tokenization, preprocessing,
+reference translations, and scoring implementation.
+
+An independent reproduction must document these settings.
+
+**3. Model configuration**
+
+The reported 28.4 BLEU result applies to Transformer (big).
+
+Results from Transformer (base) must not be substituted.
+
+**4. Dataset consistency**
+
+An independent evaluation must identify the WMT 2014
+English-to-German test set and verify that its evaluation
+data are comparable to those used in the original study.
+
+**5. Training reproducibility**
+
+Relevant factors include:
+- Training data and preprocessing
+- Model architecture and hyperparameters
+- Training duration
+- Hardware and software environment
+- Random seeds
+- Checkpoint selection and averaging
+
+**6. Independent evidence**
+
+Additional publications repeating the original score
+do not constitute independent replication.
+
+A replication should document a separately executed
+experiment and its relationship to the original work.
+
+**7. Claim interpretation**
+
+AI-001 states that the original authors reported
+28.4 BLEU.
+
+Verification of that historical reporting statement
+is distinct from verification that the model reliably
+achieves 28.4 BLEU under reproducible conditions.
+
+**8. Reference-label integrity**
+
+Independent reviewers must assess the precise claim
+defined in the dataset.
+
+They must not silently reinterpret a reporting claim
+as a reproducibility claim.
+
+**Current assessment:**
+Primary-source reporting documented.
+Independent replication not assessed.
+Reviewer labels unassigned.
 
 2.7 Independent Reviewer Assessment
 
