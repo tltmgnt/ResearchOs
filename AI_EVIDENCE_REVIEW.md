@@ -310,18 +310,35 @@ D. Current Evidence Inventory
 
 **AI-001-IMPLEMENTATION-01**
 
-- Source: Alexander Rush et al. (2018),
-  The Annotated Transformer
-- Source URL:
-  https://nlp.seas.harvard.edu/2018/04/03/attention.html
-- Evidence type: Separate Transformer implementation
-- Origin ID: harvardnlp-annotated-transformer-2018
-- Implementation: PyTorch
-- Demonstration dataset: IWSLT German-to-English
-- Original result discussed: 28.4 BLEU on WMT 2014
-- Independently reproduced 28.4 BLEU: NOT ESTABLISHED
-- Comparability: Different demonstration dataset
-- Classification: IMPLEMENTATION EVIDENCE ONLY
+- **AI-001-REPLICATION-01**
+
+- Source: Ott et al. (2018),
+  Scaling Neural Machine Translation
+- DOI: 10.18653/v1/W18-6301
+- arXiv: 1806.00187
+- Evidence type: Separate benchmark experiment
+- Origin ID: ott-2018-scaling-nmt
+- Model family: Transformer
+- Evaluation: WMT 2014 English-to-German
+- Training data: WMT 2016 English-to-German
+- Reported result: 29.3 BLEU
+- Reported hardware: 128 GPUs
+- Reported training time: 85 minutes
+- Exact replication of 28.4 BLEU: NOT ESTABLISHED
+- Comparability: PARTIAL
+- Independent execution: Reported by a separate
+  research team; full independence assessment pending
+
+**Assessment:**
+Ott et al. report a separately executed Transformer
+benchmark experiment on the same translation task.
+
+Their training and optimization conditions differ
+from the original study.
+
+The reported 29.3 BLEU result provides relevant
+external benchmark evidence but does not establish
+an exact reproduction of the original 28.4 BLEU.
 
 **Assessment:**
 This source demonstrates a separate implementation
