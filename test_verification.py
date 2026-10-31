@@ -132,3 +132,27 @@ def test_whitespace_does_not_create_independent_origin():
     ]
 
     assert verify_independent_origins(claim) is False
+
+    
+    def test_duplicate_evidence_identifier_across_claims():
+    import pytest
+    from researchos.core import Claim, Evidence, EpistemicController
+
+    controller = EpistemicController()
+
+    first = Claim(identifier="claim-1", statement="First claim")
+    second = Claim(identifier="claim-2", statement="Second claim")
+
+    controller.register(first)
+    controller.register(second)
+
+    controller.add_evidence(
+        "claim-1",
+        Evidence("shared-evidence", "source-a", True, True)
+    )
+
+    with pytest.raises(ValueError, match="duplicate evidence identifier"):
+        controller.add_evidence(
+            "claim-2",
+            Evidence("shared-evidence", "source-b", True, True)
+        )
