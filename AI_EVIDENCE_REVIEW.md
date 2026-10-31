@@ -249,7 +249,98 @@ as a reproducibility claim.
 Primary-source reporting documented.
 Independent replication not assessed.
 Reviewer labels unassigned.
+2.6A Independent Replication Evidence
 
+Claim ID: AI-001
+
+Original publication: Vaswani et al. (2017), Attention Is All You Need
+
+Original reported result: 28.4 BLEU on WMT 2014 English-to-German using Transformer (big).
+
+Independent replication status: NOT ESTABLISHED
+
+A. Evidence Classification
+
+Evidence must be classified into one of the following categories:
+
+Category	Meaning	Establishes exact-result replication?
+Original publication	Reports the authors’ original experiment	No
+Secondary citation	Repeats or summarizes the original result	No
+Independent implementation	Implements the Transformer architecture separately	Not necessarily
+Independent benchmark evaluation	Reports a separately executed benchmark experiment	Potentially
+Comparable independent replication	Documents sufficiently comparable conditions and results	Potentially
+
+B. Candidate Replication Record
+
+For every candidate source, record:
+
+* Publication title
+* Authors
+* Publication year
+* DOI, arXiv ID, or permanent repository identifier
+* Relationship to the original authors or implementation
+* Model configuration
+* Training dataset
+* Evaluation dataset and split
+* BLEU scoring implementation
+* Reported score
+* Experimental hardware and software
+* Availability of code and checkpoints
+* Evidence of independent execution
+* Differences from the original experiment
+
+Do not classify a result as an exact replication merely because it uses the Transformer architecture.
+
+C. Comparability Assessment
+
+An independent experiment should be compared with the original study across:
+
+1. Transformer model variant
+2. Training data and preprocessing
+3. WMT 2014 English-to-German test set
+4. BLEU scoring procedure
+5. Decoding configuration
+6. Checkpoint selection
+7. Reported result and uncertainty
+8. Implementation independence
+
+Any material differences must be recorded.
+
+D. Current Evidence Inventory
+
+AI-001-SOURCE-01
+
+* Source: Vaswani et al. (2017)
+* Evidence type: Original publication
+* Origin ID: vaswani-2017-transformer
+* Finding: Original authors reported 28.4 BLEU.
+* Independent replication: No
+
+AI-001-REPLICATION-01
+
+* Source: Not yet selected
+* Evidence type: Candidate independent replication
+* Origin ID: Pending
+* Experimental conditions: Pending
+* Reported result: Pending
+* Comparability assessment: Pending
+* Independent replication: NOT ASSESSED
+
+E. Outstanding Tasks
+
+* [ ]	Identify a candidate independent replication publication.
+* [ ]	Verify the publication and its reported results.
+* [ ]	Establish whether the experiment was independently executed.
+* [ ]	Compare benchmark and model configurations.
+* [ ]	Document methodological differences.
+* [ ]	Record supporting or contradictory findings.
+* [ ]	Submit the evidence package for independent review.
+
+Conclusion: The original reported score has been documented, but independent reproduction of the result has not been established.
+
+Reference label: UNASSIGNED
+
+ResearchOS prediction: NOT RUN
 2.7 Independent Reviewer Assessment
 
 Reviewer 1
