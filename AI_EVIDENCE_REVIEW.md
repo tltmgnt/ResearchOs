@@ -66,20 +66,31 @@ Evidence status: Source identified; detailed verification pending.
 
 2.3 Reported Experimental Result
 
-Field	Recorded information
-Task	English-to-German machine translation
-Benchmark	WMT 2014
-Model family	Transformer
-Reported metric	BLEU
-Candidate score	28.4
-Model configuration	Requires confirmation
-Test-set details	Requires confirmation
-Tokenization/scoring	Requires confirmation
-Training conditions	Requires confirmation
-Independent replication	Not yet assessed
+### 2.3 Reported Experimental Result
 
-Source inspection task: Locate the original paper’s results table and verify the exact model variant and conditions associated with 28.4 BLEU.
+| Field | Recorded information |
+|---|---|
+| Task | English-to-German machine translation |
+| Benchmark | WMT 2014 |
+| Test set | newstest2014 |
+| Model | Transformer (big) |
+| Reported metric | BLEU |
+| Reported score | 28.4 |
+| Comparison model | Transformer (base): 27.3 BLEU |
+| Training hardware | 8 NVIDIA P100 GPUs |
+| Reported training time | 3.5 days |
+| Primary evidence location | Table 2 and Section 6.1 |
+| Source verification | Original publication confirms reported score |
+| Independent replication | Not yet assessed |
 
+**Source verification finding:** The original NeurIPS 2017
+publication reports 28.4 BLEU for Transformer (big) on
+WMT 2014 English-to-German translation.
+
+**Evidence limitation:** This verifies what the authors
+reported. It does not independently reproduce the result.
+
+**Reference label:** UNASSIGNED
 2.4 Evidence Provenance
 
 Primary source: Vaswani et al. (2017), Attention Is All You Need.
