@@ -93,16 +93,46 @@ reported. It does not independently reproduce the result.
 **Reference label:** UNASSIGNED
 2.4 Evidence Provenance
 
-Primary source: Vaswani et al. (2017), Attention Is All You Need.
+### 2.4 Evidence Provenance
 
-Evidence relationship: The original paper is the source of the reported result.
+**Primary publication:** Vaswani et al. (2017),
+*Attention Is All You Need*.
 
-Independence assessment: The paper cannot serve as an independent replication of its own result.
+**Publication identifier:** arXiv:1706.03762
 
-Additional independent sources: Not yet collected.
+**Evidence identifier:** AI-001-SOURCE-01
 
-Potential shared origins: Other documents reproducing the original results table must not automatically count as independent evidence.
+**Origin ID:** vaswani-2017-transformer
 
+**Evidence locations:**
+- Section 5.1: Training data and tokenization
+- Section 5.2: Hardware and training schedule
+- Table 2: Reported translation benchmark results
+- Section 6.1: Model results and inference settings
+
+**Confirmed source details:**
+- Approximately 4.5 million training sentence pairs
+- Byte-pair encoding with approximately 37,000 tokens
+- Transformer (big) model
+- 300,000 training steps
+- Eight NVIDIA P100 GPUs
+- Beam size 4
+- Length penalty 0.6
+- Averaging of the final 20 checkpoints
+- Reported WMT 2014 English-German score: 28.4 BLEU
+
+**Source verification status:** PRIMARY SOURCE INSPECTED
+
+**Independent replication status:** NOT ASSESSED
+
+**Independent reviewer status:** PENDING
+
+**Final reference label:** UNASSIGNED
+
+**Scientific limitation:**
+The publication confirms what the original authors reported.
+It does not independently establish reproducibility or
+validate the reported performance.
 2.5 Verification Checklist
 
 * [ ]	Original publication accessed.
