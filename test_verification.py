@@ -105,3 +105,53 @@ def test_single_verified_origin_rejected():
     )
 
     assert verify_independent_origins(claim) is False
+def test_whitespace_does_not_create_independent_origin():
+    from researchos.core import Claim, Evidence
+    from researchos.verification import verify_independent_origins
+
+    claim = Claim(
+        identifier="M5-001",
+        statement="Test evidence provenance"
+    )
+
+    claim.evidence = [
+        Evidence(
+            identifier="E1",
+            source="Source A",
+            supports=True,
+            independently_verified=True,
+            origin_id="source-A"
+        ),
+        Evidence(
+            identifier="E2",
+            source="Source A duplicate",
+            supports=True,
+            independently_verified=True,
+            origin_id=" source-A "
+        )
+    ]
+
+    assert verify_independent_origins(claim) is False
+
+def test_duplicate_evidence_identifier_across_claims():
+    import pytest
+    from researchos.core import Claim, Evidence, EpistemicController
+
+    controller = EpistemicController()
+
+    first = Claim(identifier="claim-1", statement="First claim")
+    second = Claim(identifier="claim-2", statement="Second claim")
+
+    controller.register(first)
+    controller.register(second)
+
+    controller.add_evidence(
+        "claim-1",
+        Evidence("shared-evidence", "source-a", True, True)
+    )
+
+    with pytest.raises(ValueError, match="duplicate evidence identifier"):
+        controller.add_evidence(
+            "claim-2",
+            Evidence("shared-evidence", "source-b", True, True)
+        )

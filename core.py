@@ -42,8 +42,10 @@ class EpistemicController:
 
     def add_evidence(self, claim_id: str, evidence: Evidence):
         claim = self.claims[claim_id]
-        if any(e.identifier == evidence.identifier for e in claim.evidence):
-            raise ValueError('duplicate evidence identifier')
+        for existing_claim in self.claims.values():
+            for existing_evidence in existing_claim.evidence:
+                if existing_evidence.identifier == evidence.identifier:
+                    raise ValueError('duplicate evidence identifier')
         claim.evidence.append(evidence)
         self.audit.append({'claim': claim_id, 'event': 'evidence_added', 'evidence': evidence.identifier})
         if not evidence.supports:

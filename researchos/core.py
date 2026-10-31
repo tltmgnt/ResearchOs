@@ -53,10 +53,25 @@ class EpistemicController:
 
     def add_evidence(self, claim_id: str, evidence: Evidence):
         claim = self.claims[claim_id]
+
+        for existing_claim in self.claims.values():
+            for existing_evidence in existing_claim.evidence:
+                if existing_evidence.identifier == evidence.identifier:
+                    raise ValueError(
+                        'duplicate evidence identifier across claims'
+                    )
+
         if any(e.identifier == evidence.identifier for e in claim.evidence):
             raise ValueError('duplicate evidence identifier')
+
         claim.evidence.append(evidence)
-        self.audit.append({'claim': claim_id, 'event': 'evidence_added', 'evidence': evidence.identifier})
+      
+        
+        self.audit.append({
+            'claim': claim_id, 
+            'event': 'evidence_added', 
+            'evidence': evidence.identifier
+        })
         if not evidence.supports:
             self._contest_with_dependents(claim_id)
 
@@ -99,6 +114,7 @@ class EpistemicController:
 
     def transition(self, claim_id: str, target: Status):
         claim = self.claims[claim_id]
+        
         allowed = {
             Status.GENERATED: {Status.UNVERIFIED},
             Status.UNVERIFIED: {Status.SUPPORTED},
