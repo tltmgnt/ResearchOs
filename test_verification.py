@@ -133,7 +133,7 @@ def test_whitespace_does_not_create_independent_origin():
 
     assert verify_independent_origins(claim) is False
 
- def test_duplicate_evidence_identifier_across_claims():
+def test_duplicate_evidence_identifier_across_claims():
     import pytest
     from researchos.core import Claim, Evidence, EpistemicController
 
