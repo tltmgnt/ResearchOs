@@ -56,3 +56,15 @@ Evidence marked `independently_verified=True` is a **caller-provided assertion**
 ## Contributions
 
 See [CONTRIBUTING.md](CONTRIBUTING.md). External contributions are not currently accepted pending licensing decisions.
+
+## Ω-R3B proposed replication benchmark
+
+The [Ω-R3B specification](docs/OMEGA_R3B.md) defines matched B0–B6 comparisons,
+component ablations, factorial interactions, fidelity, replication resistance, disclosure
+boundaries and empirical completion gates. `researchos/r3b.py` provides adapter contracts,
+a matched runner, validated metrics, paired bootstrap analysis and auditable JSON exports.
+Start with [the protocol template](benchmarks/r3b/protocol.json).
+Reference systems and independent replication results remain pending; this addition makes
+no claim of integration superiority or intellectual-property protection.
+
+Run the current repository tests with `python -m unittest discover -v`.
