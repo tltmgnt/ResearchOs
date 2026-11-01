@@ -190,3 +190,19 @@ Run `python -m unittest discover -v` from the repository root. Implement `Benchm
 adapters, freeze a protocol using the template, call `run_matched`, then `write_record`.
 Compare B6/B5 and B6/ablations on independent units using `paired_comparison`. No empirical
 reference result or synthetic superiority demonstration is shipped with this infrastructure.
+
+### Analyze an exported record
+
+```bash
+python -m researchos.r3b_report run.json --metric task_success --output report.json
+python -m researchos.r3b_report run.json --metric regret --lower-is-better --output regret.json
+```
+
+The CLI verifies the canonical record digest, validates observations, rejects mismatched
+implementation or trial coverage, and averages task scores within each trial before a
+paired bootstrap. Trials must be independent; repeated deterministic runs do not establish
+independence. Default comparison is B6 versus B5; `--reference` and `--comparator` also
+support ablation labels. Tasks receive equal weight, and metric direction must be selected
+explicitly for losses. Reports retain the source digest and dataset version. A matching
+digest checks content consistency, not authorship. These descriptive reports do not
+establish statistical significance, practical importance, or replication resistance.
