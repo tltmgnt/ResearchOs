@@ -1,3 +1,5 @@
+> Legacy v0.1 overview. For current packaging, canonical runtime and implemented capabilities, use [README.md](README.md). Historical missing-capability statements below describe the original prototype.
+
 # ResearchOS — Topological Epistemic Control Theory (TECT)
 
 **Status: research prototype / pre-alpha. Not certified for high-stakes use.**
