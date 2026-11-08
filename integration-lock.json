@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "scope": "Synthetic offline installed integration; correlated evidence",
+  "repositories": [
+    {
+      "repository": "tltmgnt/TruthAi",
+      "commit": "9e3912ffe5cd45a13e0e1f00d2378bd8392ed2de"
+    },
+    {
+      "repository": "tltmgnt/-Topology-for-Geographic-and-Spatial-System",
+      "commit": "19264be35259b142aa2a480ce92addf995a2bdcf"
+    },
+    {
+      "repository": "tltmgnt/-Topology-for-Computation-and-Formal-Verification",
+      "commit": "9f0f742122b2a9497612a830e0803cc4dcb3d904"
+    }
+  ]
+}

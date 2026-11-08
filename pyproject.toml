@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+[project]
+name = "researchos-tect-core"
+version = "0.1.0"
+description = "Bounded epistemic controller, explicit interoperability and evaluation tools"
+requires-python = ">=3.10"
+[project.optional-dependencies]
+signatures = ["cryptography>=43"]
+[project.scripts]
+tect-runtime = "tect_runtime.__main__:main"
+[tool.setuptools.packages.find]
+include = ["researchos*", "tect_runtime*", "tect_interop*"]

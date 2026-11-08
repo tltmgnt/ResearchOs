@@ -1,33 +1,38 @@
-name: ResearchOS Python Tests
-
+name: ResearchOS Core and Interoperability
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
   workflow_dispatch:
-
 permissions:
   contents: read
-
 jobs:
   test:
-    runs-on: ubuntu-latest
-
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        python: ['3.10', '3.12', '3.13']
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
-          python-version: '3.11'
-
-      - name: Install testing dependencies
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
+        with:
+          python-version: ${{ matrix.python }}
+      - run: python -m pip install '.[signatures]' pytest
+      - name: Legacy and canonical controller checks
         run: |
-          python -m pip install --upgrade pip
-          python -m pip install pytest
-
-      - name: Run ResearchOS tests
+          python -m pytest -q
+          python -m unittest discover -s tests -v
+      - name: Installed CLI replay outside source tree
+        shell: bash
         run: |
-          python -m pytest -v
+          workspace="$PWD"
+          cd "$RUNNER_TEMP"
+          set +e
+          tect-runtime pilot --output core-pilot
+          status=$?
+          set -e
+          test "$status" -eq 1
+          tect-runtime verify core-pilot
