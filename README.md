@@ -27,3 +27,5 @@ python -m tect_interop.demo --output report.json --ledger events.sqlite
 The test calls the real spatial and finite-state analyzers on one synthetic undirected graph. Removing an edge changes the finite verification result and reopens the TruthAi review and TECT dependent claim. Formal labels are computed by the spatial analyzer, so this is correlated software evidence, not independent reproduction. The ledger survives restart and rejects stale concurrent writes; its hashes do not prevent an owner rewriting the database.
 
 [Legacy overview](README%202.md) records the original prototype. [TECT scope](docs/INTEROPERABILITY.md) explains mathematical and operational limits. No schedules, paid providers, broker execution or external messages are enabled by this change.
+
+**∞**
