@@ -1,5 +1,14 @@
 # ResearchOS / TECT
 
+<!-- research-workbench:start -->
+## Research workbench
+
+[Open this repository's private workbench](https://tltmgnt-researchos.troturn31.chatgpt.site) · [All repository workbenches](https://tltmgnt-research-workbenches.troturn31.chatgpt.site)
+
+The hosted interface requires ChatGPT sign-in and access to the private Site. It supports browser-local research records, evidence fingerprints and workspace export. It is a prototype: no live AI model or repository backend is connected, and it does not establish external validation.
+<!-- research-workbench:end -->
+
+
 Research prototype for controlled, revisable acceptance of claims. Software checks and declared policy acceptance do not establish scientific truth or production authorization.
 
 ## Install and check
