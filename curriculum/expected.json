@@ -1,0 +1,102 @@
+{
+  "case_count": 9,
+  "cases": [
+    {
+      "actual": "PASS",
+      "case": "registration",
+      "expected": "PASS",
+      "passed": true
+    },
+    {
+      "actual": "GENERATED",
+      "case": "generated state",
+      "expected": "GENERATED",
+      "passed": true
+    },
+    {
+      "actual": "FAIL",
+      "case": "cannot skip lifecycle stages",
+      "expected": "FAIL",
+      "passed": true
+    },
+    {
+      "actual": {
+        "claims": {
+          "c": {
+            "assurance_scope": "",
+            "challenges": [],
+            "confidence": 0.5,
+            "id": "c",
+            "last_validation_at": null,
+            "provenance": [
+              "fictional:source"
+            ],
+            "reassessment_reasons": [],
+            "state": "GENERATED",
+            "statement": "Synthetic claim",
+            "version": 1
+          }
+        },
+        "evidence": {},
+        "relations": [],
+        "version": 1
+      },
+      "case": "rejection leaves state unchanged",
+      "expected": {
+        "claims": {
+          "c": {
+            "assurance_scope": "",
+            "challenges": [],
+            "confidence": 0.5,
+            "id": "c",
+            "last_validation_at": null,
+            "provenance": [
+              "fictional:source"
+            ],
+            "reassessment_reasons": [],
+            "state": "GENERATED",
+            "statement": "Synthetic claim",
+            "version": 1
+          }
+        },
+        "evidence": {},
+        "relations": [],
+        "version": 1
+      },
+      "passed": true
+    },
+    {
+      "actual": 2,
+      "case": "rejected operation stays in ledger",
+      "expected": 2,
+      "passed": true
+    },
+    {
+      "actual": "PASS",
+      "case": "adjacent initial transition",
+      "expected": "PASS",
+      "passed": true
+    },
+    {
+      "actual": "UNCERTAIN",
+      "case": "support without validation remains uncertain",
+      "expected": "UNCERTAIN",
+      "passed": true
+    },
+    {
+      "actual": 0.0,
+      "case": "projection omits statement changes: not a full-state metric",
+      "expected": 0.0,
+      "passed": true
+    },
+    {
+      "actual": false,
+      "case": "report grants no execution",
+      "expected": false,
+      "passed": true
+    }
+  ],
+  "schema_version": 1,
+  "scope": "Synthetic curriculum checks only",
+  "status": "PASS"
+}

@@ -1,6 +1,6 @@
 # Topology compatibility and curriculum v2 — ResearchOs
 
-Version 2 adapts the explicit-molecular-graph teaching pattern to this repository's actual role. This is documentation and a learning/decision framework; it introduces no mathematical engine, runtime dependency or operational permission.
+The verified edition of version 2 adapts the explicit-molecular-graph teaching pattern to this repository's actual role. This edition adds executable learning checks and reviewed answer keys. It does not introduce a new topology engine or grant operational permission.
 
 ## Repository decision
 
@@ -40,47 +40,57 @@ Prerequisites: basic programming, sets, functions and graph vocabulary. Work in 
 | 5. Comparison | Justify mathematical necessity and cost. | Complete the six-criterion card for the existing approach and one proposed alternative; record unknowns honestly. | Evidence-backed recommendation with baseline and explicit veto conditions. |
 | 6. Reproduction | Communicate the bounded result. | Reproduce the capstone using existing offline fixtures and record software version, inputs, outputs and limitations. | Reviewable notebook or report distinguishing computation, replay, independent evaluation and authorization. |
 
-## Source-linked reading laboratory
+## Worked reasoning and source explanation
 
-The table is a guided selection of source lines, not an assertion that the whole repository is covered. Line numbers refer to the inspected source blob `6eeb933cfcd4ebb547a8cb87006a6307ee307499` in [tect_runtime/core.py](../../tect_runtime/core.py). Recheck anchors after source changes.
+Controller.apply() snapshots state before an operation and appends a ledger entry whether the operation passes or fails. A nonadjacent GENERATED→ASSURED request fails without changing the snapshot, but remains in the ledger. GENERATED→UNVERIFIED is adjacent and passes; UNVERIFIED→SUPPORTED without required validation is UNCERTAIN. That third outcome is a preserved evidence gap, not malformed input or scientific falsification. The state_distance projection also ignores statement changes: two different statements can have distance zero. It is not a metric on the complete claim state.
 
-| Line | Statement | Learning check |
+Read the [inspected source](https://github.com/tltmgnt/ResearchOs/blob/049ded90f6c1f3493115684e5fedb0729e3b85a2/tect_runtime/core.py) alongside the [executable answer key](../../curriculum/lab.py). The source link is pinned to the inspected revision; the lab and any explicitly described fix are in this change.
+
+## Run the worked laboratory
+
+From the repository root, with Python 3.12 (the recorded local version is 3.12.14):
+
+```sh
+python curriculum/lab.py --verify
+```
+
+The lab checks **9 explicit expectations** against existing repository functions. It prints a JSON case report and exits nonzero on a wrong result. `--verify` additionally compares the entire case report with [expected.json](../../curriculum/expected.json). Read the input and predict each result before opening the answer key. No API account, credentials, model download, trading action or equipment connection is needed.
+
+| Checkpoint | Expected answer |
+| --- | --- |
+| registration | `"PASS"` |
+| generated state | `"GENERATED"` |
+| cannot skip lifecycle stages | `"FAIL"` |
+| rejection leaves state unchanged | `{"claims": {"c": {"assurance_scope": "", "challenges": [], "confidence": 0.5, "id": "c", "last_validation_at": null, "provenance": ["fictional:source"], "reassessment_reasons": [], "state": "GENERATED", "statement": "Synthetic claim", "version": 1}}, "evidence": {}, "relations": [], "version": 1}` |
+| rejected operation stays in ledger | `2` |
+| adjacent initial transition | `"PASS"` |
+| support without validation remains uncertain | `"UNCERTAIN"` |
+| projection omits statement changes: not a full-state metric | `0.0` |
+| report grants no execution | `false` |
+
+The comparisons above encode independently specified small examples and contract expectations; a passing answer key is not evidence of complete domain correctness. The original functions and their existing test suites remain the authority for broader supported contracts.
+
+## Learner tasks and assessment rubric
+
+1. Before running the lab, predict every expected answer and derive one numeric result or state transition by hand.
+2. Explain the worked reasoning above using the referenced source, including the rejected or counterexample case.
+3. Add a new valid example and a nearby failing example. Explain which assumption changes, then compare against the existing implementation. For concept/static labs, keep the result explicitly at that level.
+4. Complete the scorecard for a proposed extension and a simpler baseline. Leave measurements unknown until collected; a task that the baseline already solves is not evidence for additional topology.
+
+| Competency | Points | Full-credit evidence |
 | --- | --- | --- |
-| [16](../../tect_runtime/core.py#L16) | `def canonical(value):` | State the input/output contract and trace one normal and one failing case. |
-| [17](../../tect_runtime/core.py#L17) | `return json.dumps(value,sort_keys=True,separators=(',',':'),ensure_ascii=True,allow_nan=False)+'\n'` | Predict the returned value and distinguish a computed result from authorization. |
-| [20](../../tect_runtime/core.py#L20) | `def digest(value): return hashlib.sha256(canonical(value).encode()).hexdigest()` | State the input/output contract and trace one normal and one failing case. |
-| [23](../../tect_runtime/core.py#L23) | `def text(value):` | State the input/output contract and trace one normal and one failing case. |
-| [25](../../tect_runtime/core.py#L25) | `raise ValueError('Expected a trimmed nonempty string of at most 4096 characters')` | Construct the triggering input and explain why rejection preserves the contract. |
-| [26](../../tect_runtime/core.py#L26) | `return value` | Predict the returned value and distinguish a computed result from authorization. |
-| [29](../../tect_runtime/core.py#L29) | `def unit(value):` | State the input/output contract and trace one normal and one failing case. |
-| [31](../../tect_runtime/core.py#L31) | `raise ValueError('Expected a finite number in [0,1]')` | Construct the triggering input and explain why rejection preserves the contract. |
-| [32](../../tect_runtime/core.py#L32) | `return float(value)` | Predict the returned value and distinguish a computed result from authorization. |
-| [35](../../tect_runtime/core.py#L35) | `def date(value):` | State the input/output contract and trace one normal and one failing case. |
-| [38](../../tect_runtime/core.py#L38) | `if result.tzinfo is None: raise ValueError('Timestamps require a timezone')` | Construct the triggering input and explain why rejection preserves the contract. |
-| [39](../../tect_runtime/core.py#L39) | `return result` | Predict the returned value and distinguish a computed result from authorization. |
-| [42](../../tect_runtime/core.py#L42) | `def fields(obj,required,optional=()):` | State the input/output contract and trace one normal and one failing case. |
-| [44](../../tect_runtime/core.py#L44) | `raise ValueError('Missing or unknown fields')` | Construct the triggering input and explain why rejection preserves the contract. |
-| [47](../../tect_runtime/core.py#L47) | `def policy_default():` | State the input/output contract and trace one normal and one failing case. |
-| [48](../../tect_runtime/core.py#L48) | `return {'actors':{'author':['author'],'validator':['validator'],'adversary':['adversary'],` | Predict the returned value and distinguish a computed result from authorization. |
-| [54](../../tect_runtime/core.py#L54) | `class Controller:` | State the input/output contract and trace one normal and one failing case. |
-| [60](../../tect_runtime/core.py#L60) | `def __init__(self, policy, as_of):` | State the input/output contract and trace one normal and one failing case. |
-| [62](../../tect_runtime/core.py#L62) | `if not isinstance(policy['actors'],dict) or not policy['actors']: raise ValueError('Actors required')` | Construct the triggering input and explain why rejection preserves the contract. |
-| [67](../../tect_runtime/core.py#L67) | `raise ValueError('Unknown actor role')` | Construct the triggering input and explain why rejection preserves the contract. |
-| [69](../../tect_runtime/core.py#L69) | `if policy['minimum_density']<=0 or policy['epsilon']<=0: raise ValueError('Positive thresholds required')` | Construct the triggering input and explain why rejection preserves the contract. |
-| [70](../../tect_runtime/core.py#L70) | `if type(policy['minimum_groups']) is not int or not 1<=policy['minimum_groups']<=16: raise ValueError('Invalid minimum_groups')` | Construct the triggering input and explain why rejection preserves the contract. |
-| [72](../../tect_runtime/core.py#L72) | `raise ValueError('Nonempty unique registered attack classes required')` | Construct the triggering input and explain why rejection preserves the contract. |
-| [73](../../tect_runtime/core.py#L73) | `if not isinstance(policy['required_validations'],list) or not policy['required_validations'] or len(set(policy['required_validations']))!=len(policy['required_validations']): raise ValueError('Unique required validation methods required')` | Construct the triggering input and explain why rejection preserves the contract. |
-## Assessment and verification
+| Model and contract | 0–3 | Correct objects, relation direction, labels/units, input bounds and missingness. |
+| Derivation and trace | 0–3 | Hand derivation agrees with the specified fixture; source steps explain why. |
+| Counterexample | 0–3 | New failing/boundary case has a justified expected result; rejection is not suppressed. |
+| Scope and necessity | 0–3 | Distinguishes software behavior from validation and compares an explicit simpler alternative. |
 
-A learner must explain the model, trace the capstone, identify a counterexample and state the scope boundary. Assess these four competencies equally; a numerical score cannot compensate for an unsupported scientific or operational claim.
+Completion requires at least 10/12 and no zero in scope/necessity. A runnable answer key alone is not evidence that a learner achieved this competency. No learner-outcome study has been performed.
 
-Relevant existing checks:
+## Verification evidence and maintenance
 
-- [tests/test_attestation.py](../../tests/test_attestation.py)
-- [tests/test_cross_repository.py](../../tests/test_cross_repository.py)
-- [tests/test_interop.py](../../tests/test_interop.py)
+[VALIDATION.json](../../curriculum/VALIDATION.json) records the inspected base revision, local Python version, source/fixture hashes, lab/answer hashes, case count and exit codes. All cases were executed locally. An in-memory copy with a deliberately wrong comparison was also executed and returned nonzero, checking that the grading failure path is active. Those injected failures are harness checks, not scientific adversarial evaluations.
 
-Follow [README](../../README.md) for environment and installed-package instructions. Read scripts before execution; source-reading exercises do not authorize provider calls, model downloads, live orders, hardware actions or messages. Synthetic fixtures establish software behavior only. This documentation change does not report those exercises as already executed.
+The dedicated [curriculum workflow](../../.github/workflows/curriculum.yml) runs the same `--verify` command on relevant pull-request changes. CI status is reported by GitHub; the local record does not assert that remote CI passed. Existing full-suite and installed-package requirements still apply to runtime changes. When source or fixture semantics change, inspect the diff and rederive answers before updating expected.json. Never regenerate expected answers solely to silence a failure. Refresh the local validation record after an actual run; do not rewrite its recorded base revision as if a new run occurred.
 
 ## Interoperability and adoption gate
 
@@ -126,3 +136,5 @@ Each repository carries its own decision, source reading and capstone. Links tar
 | [TruthAI-Uncertainty-and-Calibration](https://github.com/tltmgnt/TruthAI-Uncertainty-and-Calibration/blob/curriculum/topology-compatibility-v2/docs/portfolio/TOPOLOGY_CURRICULUM_V2.md) | specialized evaluation | Probability/statistics first; no additional topology required |
 | [-Topology-for-Geometry-and-Mathematical-Space-Classification](https://github.com/tltmgnt/-Topology-for-Geometry-and-Mathematical-Space-Classification/blob/curriculum/topology-compatibility-v2/docs/portfolio/TOPOLOGY_CURRICULUM_V2.md) | specialized mathematical tool | Finite simplicial homology over GF(2) and combinatorial surface recognition |
 | [-Topology-in-Biology-and-Medicine](https://github.com/tltmgnt/-Topology-in-Biology-and-Medicine/blob/curriculum/topology-compatibility-v2/docs/portfolio/TOPOLOGY_CURRICULUM_V2.md) | specialized network tool | Directed signed graphs with scoped evidence qualification |
+
+See the [executable portfolio lab index](CURRICULUM_LABS.md) for all pull requests, case counts and local validation records.
