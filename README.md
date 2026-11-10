@@ -29,3 +29,7 @@ The test calls the real spatial and finite-state analyzers on one synthetic undi
 [Legacy overview](README%202.md) records the original prototype. [TECT scope](docs/INTEROPERABILITY.md) explains mathematical and operational limits. No schedules, paid providers, broker execution or external messages are enabled by this change.
 
 **∞**
+
+## Topology compatibility and curriculum
+
+See the [repository-specific v2 curriculum](docs/portfolio/TOPOLOGY_CURRICULUM_V2.md) for topology choices, worked explanations, a graded laboratory and adoption boundaries. Run the offline answer key from this repository root:\n\n```sh\npython curriculum/lab.py --verify\n```\n\n[Expected answers](curriculum/expected.json) · [Recorded local validation](curriculum/VALIDATION.json). The guide states any existing dependency needed for the lab.
