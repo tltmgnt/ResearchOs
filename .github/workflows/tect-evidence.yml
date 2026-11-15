@@ -1,4 +1,4 @@
-name: TECT evidence integrity
+name: TECT evidence integrity and C++ model smoke test
 on:
   push:
   pull_request:
@@ -9,7 +9,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Synthetic failure controls
+      - name: Synthetic evidence-gate failure controls
         run: python3 evidence_tect/check.py --self-test
-      - name: Verify claim register (not scientific assurance)
+      - name: Verify scoped claim register (not scientific assurance)
         run: python3 evidence_tect/check.py
+      - name: Compile and run bounded C++17 reference model
+        run: |
+          g++ -std=c++17 -O2 -Wall -Wextra -pedantic cpp_model/model.cpp -o "${RUNNER_TEMP}/tect_cpp_model"
+          "${RUNNER_TEMP}/tect_cpp_model"
