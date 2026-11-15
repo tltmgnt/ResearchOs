@@ -1,0 +1,15 @@
+name: TECT evidence integrity
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  local-evidence-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Synthetic failure controls
+        run: python3 evidence_tect/check.py --self-test
+      - name: Verify claim register (not scientific assurance)
+        run: python3 evidence_tect/check.py
